@@ -1,5 +1,6 @@
 package com.springbootdemo.config;
 
+import com.springbootdemo.aop.TimeTraceAop;
 import com.springbootdemo.repository.JpaMemberRepository;
 import com.springbootdemo.repository.MemberRepository;
 import com.springbootdemo.repository.MemoryMemberRepository;
@@ -13,22 +14,32 @@ import javax.persistence.EntityManager;
 @Configuration
 public class SpringConfig {
 
+    private final MemberRepository memberRepository;
+
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    /*
     private EntityManager em;
 
     @Autowired
     public SpringConfig(EntityManager em) {
         this.em = em;
     }
+    */
 
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
+        //return new MemberService(memberRepository());
     }
 
+    /*
     @Bean
     public MemberRepository memberRepository(){
         //return new MemoryMemberRepository();
         return new JpaMemberRepository(em);
     }
-
+    */
 }
